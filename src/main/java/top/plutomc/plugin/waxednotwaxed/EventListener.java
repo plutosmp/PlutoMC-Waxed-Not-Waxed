@@ -8,6 +8,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -17,6 +18,10 @@ public final class EventListener implements Listener {
     public void onInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         if (!player.hasPermission("plutomc.waxednotwaxed.check"))
+            return;
+        if (!player.isSneaking())
+            return;
+        if (event.getAction() != Action.RIGHT_CLICK_BLOCK)
             return;
         ItemStack itemInMainHand = player.getInventory().getItemInMainHand();
         Block block = event.getClickedBlock();
